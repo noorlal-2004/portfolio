@@ -15,7 +15,7 @@ It highlights my background, education, hackathon participation, certifications,
 
 ## 🚀 Deployment
 Deployed on **GitHub Pages** at:  
-[https://your-username.github.io/portfolio](https://your-username.github.io/portfolio)
+
 
 ## 🛠️ Tech Stack
 - HTML5
