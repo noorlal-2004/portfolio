@@ -1,0 +1,363 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Projects • Noor Lal</title>
+  <style>
+    :root {
+      --bg: #fdfdfd;
+      --sidebar: #111;
+      --text: #222;
+      --accent: #aa0452;
+      --muted: #666;
+    }
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      display:flex;
+      min-height:100vh;
+      font-family: system-ui, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width:220px;
+      background:var(--bg);
+      color:var(--text);
+      padding:2rem 1rem;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      border-right:1px solid #eee;
+      position:fixed;
+      top:0;
+      left:0;
+      bottom:0;
+    }
+    .logo {
+      font-size:1.6rem;
+      font-weight:700;
+      margin-bottom:2rem;
+      color:var(--sidebar);
+      position:relative;
+      padding-bottom:.5rem;
+    }
+    .logo::after {
+      content:"";
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      height:2px;
+      background:var(--accent);
+    }
+    .nav a {
+      display:block;
+      color:var(--text);
+      text-decoration:none;
+      padding:.6rem 0;
+      font-weight:500;
+    }
+    .nav a.active,
+    .nav a:hover {
+      color:var(--accent);
+      font-weight:700;
+    }
+    .sidebar-footer a {
+      margin-right:.6rem;
+      color:var(--text);
+      text-decoration:none;
+      font-size:1.2rem;
+    }
+    .sidebar-footer a:hover { color:var(--accent); }
+
+    /* Main */
+    .main {
+      flex:1;
+      margin-left:220px;
+      padding:2rem;
+    }
+    .section h2 {
+      font-size:2rem;
+      font-weight:700;
+      margin-bottom:1.5rem;
+      border-bottom:2px solid var(--accent);
+      display:inline-block;
+      padding-bottom:.3rem;
+    }
+
+    /* Project Grid */
+    .project-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+      gap:1.5rem;
+    }
+    .project-card {
+      background:#fff;
+      border:1px solid #eee;
+      border-radius:10px;
+      overflow:hidden;
+      cursor:pointer;
+      transition:.3s;
+      box-shadow:0 3px 6px rgba(0,0,0,0.05);
+    }
+    .project-card:hover {
+      transform:translateY(-4px);
+      box-shadow:0 6px 12px rgba(0,0,0,0.1);
+    }
+    .project-card img {
+      width:100%;
+      height:180px;
+      object-fit:cover;
+    }
+    .project-card h3 {
+      padding:1rem;
+      font-size:1rem;
+      text-align:center;
+      color:var(--sidebar);
+    }
+
+    /* Modal */
+    .modal {
+      display:none;
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:rgba(0,0,0,0.6);
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+    }
+    .modal-content {
+      background:#fff;
+      border-radius:12px;
+      max-width:800px;
+      width:90%;
+      padding:1rem;
+      position:relative;
+    }
+    .modal-content h3 {
+      margin:1rem 0;
+      font-size:1.5rem;
+      color:var(--sidebar);
+    }
+    .modal-content p {
+      margin-top: 1rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .close-btn {
+      position:absolute;
+      top:10px; right:15px;
+      font-size:1.5rem;
+      cursor:pointer;
+      color:var(--accent);
+    }
+
+    /* Carousel */
+    .carousel {
+      position:relative;
+      overflow:hidden;
+      border-radius:8px;
+      margin-bottom:1rem;
+    }
+    .carousel-inner {
+      display: flex;
+      transition: transform .5s ease-in-out;
+    }
+    .carousel-item {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .carousel-item img,
+    .carousel-item video {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .carousel-controls {
+      position:absolute;
+      top:50%;
+      left:0;
+      right:0;
+      display:flex;
+      justify-content:space-between;
+      transform:translateY(-50%);
+      padding:0 1rem;
+    }
+    .carousel-controls button {
+      background:rgba(0,0,0,0.5);
+      color:white;
+      border:none;
+      padding:.5rem .8rem;
+      border-radius:50%;
+      cursor:pointer;
+    }
+
+    @media(max-width:768px){
+      .sidebar {position:relative; width:100%; flex-direction:row; border-right:none; border-bottom:1px solid #eee;}
+      .main {margin-left:0; padding:1rem;}
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">Noor.</div>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/project" class="active">Works</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+    <div class="sidebar-footer">
+      <a href="mailto:noorlal2004@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://linkedin.com/in/noor-lal-4114a32b6"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/"><i class="fab fa-github"></i></a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="section">
+      <h2>My Projects</h2>
+      <div class="project-grid">
+        <div class="project-card" onclick="openModal(0)">
+          <img src="{% static 'portfolio/project1.jpeg' %}" alt="ReFood">
+          <h3>ReFood - Food Waste Reduction App</h3>
+        </div>
+        <div class="project-card" onclick="openModal(1)">
+          <img src="{% static 'portfolio/project2.jpeg' %}" alt="NutriLens">
+          <h3>NutriLens - Calories Count App</h3>
+        </div>
+        <div class="project-card" onclick="openModal(2)">
+          <img src="{% static 'portfolio/project4.png' %}" alt="Portfolio">
+          <h3>Portfolio Website</h3>
+        </div>
+        <div class="project-card" onclick="openModal(3)">
+          <img src="{% static 'portfolio/project3.png' %}" alt="Novels Website">
+          <h3>Noor Novels Lounge - Novels website</h3>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ReFood Modal -->
+  <div class="modal" id="modal0">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal(0)">&times;</span>
+      <h3>ReFood - Food Waste Reduction App</h3>
+      <div class="carousel" id="carousel0">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="{% static 'portfolio/project1-1.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project1-2.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project1-3.png' %}" alt=""></div>
+          <div class="carousel-item"><video controls src="{% static 'portfolio/video1.mp4' %}"></video></div>
+        </div>
+        <div class="carousel-controls">
+          <button onclick="prevSlide(0)">&#10094;</button>
+          <button onclick="nextSlide(0)">&#10095;</button>
+        </div>
+      </div>
+      <p>A React Native + Firebase app with AI recipe recommendation, expiry alerts, donation centers, and multi-role access (admin, donor, recipient, center).</p>
+    </div>
+  </div>
+
+  <!-- NutriLens Modal -->
+  <div class="modal" id="modal1">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal(1)">&times;</span>
+      <h3>NutriLens - Calorie Count App</h3>
+      <div class="carousel" id="carousel1">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="{% static 'portfolio/project2-1.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project2-2.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project2-3.png' %}" alt=""></div>
+          <div class="carousel-item"><video controls src="{% static 'portfolio/video2.mp4' %}"></video></div>
+        </div>
+        <div class="carousel-controls">
+          <button onclick="prevSlide(1)">&#10094;</button>
+          <button onclick="nextSlide(1)">&#10095;</button>
+        </div>
+      </div>
+      <p>A calorie counting app integrated with TensorFlow. Uses camera image recognition for calorie detection, daily graphs, and portion recommendations.</p>
+    </div>
+  </div>
+
+  <!-- Portfolio Website Modal -->
+  <div class="modal" id="modal2">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal(2)">&times;</span>
+      <h3>Portfolio Website</h3>
+      <div class="carousel" id="carousel2">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="{% static 'portfolio/project4-1.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project4-2.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project4-3.png' %}" alt=""></div>
+        </div>
+        <div class="carousel-controls">
+          <button onclick="prevSlide(2)">&#10094;</button>
+          <button onclick="nextSlide(2)">&#10095;</button>
+        </div>
+      </div>
+      <p>A personal portfolio built with Django, HTML, and CSS. Showcases my skills, projects, and contact information in a modern responsive design.</p>
+    </div>
+  </div>
+
+  <!-- Noor Novels Website Modal -->
+  <div class="modal" id="modal3">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal(3)">&times;</span>
+      <h3>Noor Novels Lounge</h3>
+      <div class="carousel" id="carousel3">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="{% static 'portfolio/project3-1.png' %}" alt=""></div>
+          <div class="carousel-item"><img src="{% static 'portfolio/project3-2.png' %}" alt=""></div>
+        </div>
+        <div class="carousel-controls">
+          <button onclick="prevSlide(3)">&#10094;</button>
+          <button onclick="nextSlide(3)">&#10095;</button>
+        </div>
+      </div>
+      <p>A vintage-style Urdu novels website built with PHP, MySQL, JavaScript, and Bootstrap. Includes a sidebar, navbar, search functionality, writers’ pages, and database-driven novel categories.</p>
+    </div>
+  </div>
+
+  <script>
+    let currentIndex = [0,0,0,0]; // four modals
+
+    function openModal(id){
+      document.getElementById('modal'+id).style.display='flex';
+    }
+    function closeModal(id){
+      document.getElementById('modal'+id).style.display='none';
+      currentIndex[id]=0;
+      updateCarousel(id);
+    }
+
+    function nextSlide(id){
+      const items = document.querySelectorAll(`#carousel${id} .carousel-item`);
+      currentIndex[id] = (currentIndex[id]+1) % items.length;
+      updateCarousel(id);
+    }
+    function prevSlide(id){
+      const items = document.querySelectorAll(`#carousel${id} .carousel-item`);
+      currentIndex[id] = (currentIndex[id]-1+items.length) % items.length;
+      updateCarousel(id);
+    }
+    function updateCarousel(id){
+      const inner = document.querySelector(`#carousel${id} .carousel-inner`);
+      inner.style.transform = `translateX(-${currentIndex[id]*100}%)`;
+    }
+  </script>
+</body>
+</html>
