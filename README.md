@@ -18,7 +18,7 @@ It highlights my background, education, hackathon participation, certifications,
 - python manage.py runserver
 
 ## 🚀 Deployment
-Deployed on **GitHub Pages** at: http://portfolio.noor.dev/
+Deployed on **GitHub Pages** at:  https://noorlal-2004.github.io/noor-portfolio/
 
 
 ## 🛠️ Tech Stack
