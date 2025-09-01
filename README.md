@@ -13,6 +13,10 @@ It highlights my background, education, hackathon participation, certifications,
 - Responsive design for desktop and mobile
 - Clean UI with accent color theme
 
+## Start Project
+- pip install -r requirements.txt
+- python manage.py runserver
+
 ## 🚀 Deployment
 Deployed on **GitHub Pages** at:  
 
